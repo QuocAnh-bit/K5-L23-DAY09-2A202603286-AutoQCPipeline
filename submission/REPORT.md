@@ -35,7 +35,14 @@ Hai giới hạn có bằng chứng từ calibration: (1) ở `phash_dist=4`, re
 Quan sát ban đầu của học viên: `img_0001` có đối tượng thiếu nhãn; `img_0002` có nhãn gán nhầm; `img_0030` có nhiều box cho một đối tượng. Các nhận xét này cần đối chiếu trực tiếp với ảnh và báo cáo trước khi xem là lỗi đã được xác nhận.
 
 ## 5. Train raw và clean
-**Chưa chạy**: phần train Colab là tùy chọn và chưa thực hiện trong lần làm này. Vì vậy chưa có số liệu mAP hoặc cơ sở để kết luận clean tốt hơn raw.
+Train trên Colab với `yolo26n.pt`, 20 epoch, batch 16, ảnh 640, seed 0 và 1. Kết quả ghi 224 ảnh raw và 205 ảnh clean; số ảnh raw thực sự được dùng có thể ít hơn nếu trình train bỏ ảnh hoặc nhãn lỗi, cần đối chiếu log.
+
+| Biến thể | mAP50 seed 0 | mAP50 seed 1 | Trung bình | Độ lệch chuẩn giữa 2 seed |
+|---|---:|---:|---:|---:|
+| raw | 0,7256 | 0,7259 | 0,7258 | 0,0002 |
+| clean | 0,6788 | 0,7219 | 0,7004 | 0,0305 |
+
+Chênh lệch trung bình clean − raw là **−0,0254**, nhỏ hơn độ lệch chuẩn 0,0305 của clean. Với chỉ hai seed, kết quả chưa đủ chắc để kết luận clean cải thiện hay làm giảm hiệu quả; số đo hiện tại không ủng hộ khẳng định clean tốt hơn raw. Hai giả thuyết cần kiểm tra: raw có 4 trường hợp rò rỉ test được phát hiện ở cửa nhận, có thể làm phép đo raw lạc quan; clean vẫn ở trạng thái Hold, còn cảnh báo chưa duyệt. Cần đối chiếu log train và chạy thêm seed/đánh giá trên tập độc lập để kiểm chứng, không suy ra mức ảnh hưởng từ các số hiện có.
 
 ## 6. Quyết định và sử dụng AI
 Giữ **Hold**. Cần người có thẩm quyền xem các cảnh báo còn lại và sửa nhãn thực sự có lỗi, sau đó chạy lại QC và gate; chỉ Release khi không còn lỗi bắt buộc và tỷ lệ cảnh báo chưa duyệt dưới 10%, không thay ngưỡng cố định để đạt kết quả.
