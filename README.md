@@ -55,6 +55,7 @@ Slide ví dụ ngưỡng 2% ("dự án đặt trong guideline"). Ở lab, hàng 
 
 - Không cần GPU cho pipeline: chỉ train mới cần ([Colab](docs/COLAB.md) hoặc Kaggle).
 - Windows: dùng Git Bash/WSL chạy nguyên lệnh `make`, hoặc chạy trực tiếp lệnh `python` (đặt `PYTHONUTF8=1`).
+- Kiểm tra bài trên Windows: `python scripts/check_submission_windows.py` (thêm `--no-train` nếu chưa train). Trình này chuẩn hóa dấu phân cách đường dẫn trong bộ nhớ; không sửa file kiểm tra gốc.
 - CVAT chỉ là phần thưởng +2: không có cũng không sao.
 </details>
 
