@@ -44,7 +44,7 @@ def run(ds, cfg):
         # Lưu box hợp lệ trước đó để phát hiện box trùng.
         previous_boxes = []
 
-        # Dguyệt từng dòng không trốn, giữ số dòng gốc.
+        # Duyệt từng dòng không trống, giữ số dòng gốc.
         for line_number, text in ds.read_label_lines(stem) or []:
             # Thử đọc năm cột theo định dạng YOLO.
             try:

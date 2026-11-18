@@ -34,7 +34,7 @@ from collections import defaultdict
 import yaml
 
 # Dùng mức lỗi và bộ đọc dòng YOLO chung.
-from ..common import ERROR, parse_yolo_line
+from ..common import ERROR, ROOT, parse_yolo_line
 
 
 # ────────────────────────────────────────────────────────────────────
@@ -42,6 +42,12 @@ from ..common import ERROR, parse_yolo_line
 # ────────────────────────────────────────────────────────────────────
 # Sửa các lỗi an toàn trên bản dữ liệu được truyền vào.
 def fix(ds, issues, cfg):
+    # Xác định thư mục raw sau khi giải quyết đường dẫn và liên kết.
+    raw_root = (ROOT / "data" / "raw").resolve()
+    # Từ chối sửa trực tiếp raw hoặc bất kỳ thư mục con nào của raw.
+    if ds.root.resolve().is_relative_to(raw_root):
+        # Báo lỗi trước khi đọc danh sách sửa hoặc ghi bất kỳ file nào.
+        raise ValueError("Không được sửa trực tiếp dữ liệu raw; hãy dùng bản sao làm việc.")
     # Lưu nhật ký thay đổi để người dùng kiểm tra.
     changes = []
     # Chỉ xử lý lỗi bắt buộc, không sửa cảnh báo.
