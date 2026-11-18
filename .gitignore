@@ -8,3 +8,4 @@ __pycache__/
 runs/
 _instructor/solution/
 .venv312/
+submission/results/results.zip

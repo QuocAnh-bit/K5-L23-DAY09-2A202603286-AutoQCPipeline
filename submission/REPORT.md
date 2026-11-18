@@ -32,7 +32,7 @@ Thử `--budget 0 --reports work/rep_nb --export-dir work/exp_nb`: kết quả *
 
 Hai giới hạn có bằng chứng từ calibration: (1) ở `phash_dist=4`, recall gần trùng 4/6, tức bỏ sót 2/6 trường hợp đã biết; (2) ở `conf=0,6`, recall cảnh báo box lỏng là 1/5, tức bỏ sót 4/5 trường hợp đã biết. Các số này đo trên calib, không chứng minh lỗi tương tự ở một ảnh raw cụ thể. Ngoài ra, dự đoán model là ý kiến thứ hai và có thể bỏ sót khi model cùng nhầm với nhãn.
 
-Quan sát ban đầu của học viên: `img_0001` có đối tượng thiếu nhãn; `img_0002` có nhãn gán nhầm; `img_0030` có nhiều box cho một đối tượng. Các nhận xét này cần đối chiếu trực tiếp với ảnh và báo cáo trước khi xem là lỗi đã được xác nhận.
+Quan sát ảnh có vẽ nhãn: `img_0001` có người mặc quân phục ở giữa chưa có box; `img_0030` có các box người chồng lấn quanh cùng một người, cần đối chiếu từng dòng nhãn trước khi sửa. Với `img_0002`, học viên nghi có nhãn gán nhầm; hình chụp chưa đủ để khẳng định và cần người duyệt kiểm tra thêm.
 
 ## 5. Train raw và clean
 Train trên Colab với `yolo26n.pt`, 20 epoch, batch 16, ảnh 640, seed 0 và 1. Kết quả ghi 224 ảnh raw và 205 ảnh clean; số ảnh raw thực sự được dùng có thể ít hơn nếu trình train bỏ ảnh hoặc nhãn lỗi, cần đối chiếu log.
@@ -49,4 +49,4 @@ Giữ **Hold**. Cần người có thẩm quyền xem các cảnh báo còn lạ
 
 - Prompt chính: nhờ AI hỗ trợ viết lần lượt bốn module QC và chú thích rõ chức năng từng dòng.
 - Kiểm tra: chạy test từng module và toàn bộ 79 test; chạy calibration, đối chiếu hai cặp ảnh và thử gate với ngân sách 0.
-- Lỗi AI: chưa ghi nhận được một lần AI sai cụ thể trong các kết quả đã lưu; cần bổ sung nếu phát hiện khi tự đọc lại code. Test xanh không bảo đảm code đúng mọi trường hợp.
+- Lỗi AI đã phát hiện: phiên bản `autofix` ban đầu do AI viết không có chốt chặn khi bị gọi trực tiếp trên `data/raw`; nếu dùng sai đầu vào, nó có thể sửa hoặc xóa dữ liệu gốc. Đã thêm kiểm tra đường dẫn trước khi ghi và thử gọi với dataset raw: hàm báo lỗi, không thực hiện sửa. Chạy lại test để kiểm tra các tình huống thông thường.
